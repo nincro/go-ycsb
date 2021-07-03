@@ -42,3 +42,6 @@ services:
   # monitors
   ycsb:
     image: pingcap/go-ycsb
+    networks:
+      dev:
+        ipv4_address: "127.0.0.1"
