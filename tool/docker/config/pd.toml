@@ -5,7 +5,7 @@ data-dir = "default.pd"
 
 client-urls = "http://127.0.0.1:2379"
 # if not set, use ${client-urls}
-advertise-client-urls = ""
+advertise-client-urls = "http://127.0.0.1:2379"
 
 peer-urls = "http://127.0.0.1:2380"
 # if not set, use ${peer-urls}
