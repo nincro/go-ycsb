@@ -79,16 +79,16 @@ echo ${TYPE} ${DB} ${WORKLOADS} ${PROPS}
 CMD="docker-compose -f ${BENCH_DB}.yml" 
 
 if [ ${TYPE} == 'load' ]; then 
-    $CMD down --remove-orphans
+    #$CMD down --remove-orphans
     rm -rf ./data/${BENCH_DB}
-    $CMD up -d
+    #$CMD up -d
     sleep ${SLEEPTIME}
 
     $CMD run ycsb load ${DB} ${WORKLOADS} -p workload=core ${PROPS} | tee ${LOG}/${BENCH_DB}_load.log
 
     $CMD down
 elif [ ${TYPE} == 'run' ]; then
-    $CMD up -d
+    #$CMD up -d
     sleep ${SLEEPTIME}
 
     for workload in a b c d e f 
