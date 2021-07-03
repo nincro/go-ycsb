@@ -136,7 +136,7 @@
 
 [pd]
 ## PD endpoints.
-# endpoints = []
+endpoints = ["127.0.0.1"]
 
 [raftstore]
 ## Whether to force to flush logs.
