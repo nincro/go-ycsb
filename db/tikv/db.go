@@ -15,6 +15,8 @@ package tikv
 
 import (
 	"fmt"
+	"log"
+	"time"
 
 	"github.com/magiconair/properties"
 	"github.com/pingcap/go-ycsb/pkg/ycsb"
@@ -33,11 +35,19 @@ type tikvCreator struct {
 }
 
 func (c tikvCreator) Create(p *properties.Properties) (ycsb.DB, error) {
+	log.Printf("before update global by ninn")
 	config.UpdateGlobal(func(c *config.Config) {
 		c.TiKVClient.GrpcConnectionCount = p.GetUint(tikvConnCount, 128)
 		c.TiKVClient.MaxBatchSize = p.GetUint(tikvBatchSize, 128)
+		c.TiKVClient.AsyncCommit = config.AsyncCommit{
+			// FIXME: Find an appropriate default limit.
+			KeysLimit:         256,
+			TotalKeySizeLimit: 4 * 1024, // 4 KiB
+			SafeWindow:        2 * time.Second,
+			AllowedClockDrift: 500 * time.Millisecond,
+		}
 	})
-
+	log.Printf("update global success by ninn")
 	tp := p.GetString(tikvType, "raw")
 	switch tp {
 	case "raw":
